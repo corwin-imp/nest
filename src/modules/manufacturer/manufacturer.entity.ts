@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-
 @Entity({
   name: 'manufacturers',
 })
@@ -15,12 +14,5 @@ export class Manufacturer {
   phone: string;
 
   @Column()
-  siret: number;
-}
-
-export class ManufacturerFillableFields {
-  id: string;
-  name: string;
-  phone: string;
   siret: number;
 }

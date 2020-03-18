@@ -1,14 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn ,OneToOne,OneToMany, JoinColumn } from 'typeorm';
+import { Manufacturer } from '../manufacturer';
+import { Owner } from '../owner';
 
 @Entity({
   name: 'cars',
 })
 export class Car {
-  @PrimaryGeneratedColumn({ length: 255 })
+  @PrimaryGeneratedColumn()
   id: string;
-
-  @Column()
-  manufacturerId: number;
 
   @Column()
   price: number;
@@ -16,14 +15,8 @@ export class Car {
   @Column({ length: 255 })
   firstRegistrationDate: string;
 
-  @Column()
-  ownerId: number;
-}
-
-export class CarFillableFields {
-  manufacturerId: number;
-  ownerId: number;
-  firstRegistrationDate: string;
-  price: number;
-  id: string;
+  @OneToMany(type => Owner, owner => owner.id)
+  owners: Owner[];
+  @OneToOne(type => Manufacturer)
+  manufacturer: Manufacturer;
 }

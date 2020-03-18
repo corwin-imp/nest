@@ -1,3 +1,20 @@
+import { Injectable } from '@nestjs/common';
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import { Owner } from './owner.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+@Injectable()
+export class OwnerService extends TypeOrmCrudService<Owner>{
+  constructor(@InjectRepository(Owner) ownersRepository: Repository<Owner>){
+    super(ownersRepository);
+  }
+  async applyDiscount() {
+
+  }
+}
+
+/*
 import * as crypto from 'crypto';
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,7 +29,9 @@ export class OwnersService {
     @InjectRepository(Owner)
     private readonly ownerRepository: Repository<Owner>,
   ) { }
+  async removeOwners(){
 
+  }
   async get(id: number) {
     return this.ownerRepository.findOne(id);
   }
@@ -36,7 +55,7 @@ export class OwnersService {
   async create(
     payload: OwnerFillableFields,
   ) {
-    const user = await this.getByEmail(payload.email);
+    const user = await this.getByEmail(payload);
 
     if (user) {
       throw new NotAcceptableException(
@@ -49,3 +68,4 @@ export class OwnersService {
     );
   }
 }
+*/
