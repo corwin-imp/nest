@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from './../config';
-import { AuthModule } from './../auth';
-import { CarModule } from './../car';
-import { ManufacturerModule } from './../manufacturer';
-import { OwnerModule } from './../owner';
+import { ConfigModule, ConfigService } from '../config';
+import { CarModule } from '../car';
+import { ManufacturerModule } from '../manufacturer';
+import { OwnerModule } from '../owner';
+import { ScheduleModule } from 'nest-schedule';
+import { ScheduleService } from '../../schedules/tasks.service';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { OwnerModule } from './../owner';
     ManufacturerModule,
     OwnerModule,
     CarModule,
+    ScheduleModule.register({}),
 
   ],
   controllers: [
@@ -37,6 +39,7 @@ import { OwnerModule } from './../owner';
   ],
   providers: [
     AppService,
+    ScheduleService,
   ],
 })
 export class AppModule { }

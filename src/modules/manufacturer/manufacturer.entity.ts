@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Car } from '../car';
 
 @Entity({
   name: 'manufacturers',
@@ -13,6 +14,8 @@ export class Manufacturer {
   @Column({ length: 255 })
   phone: string;
 
+  @OneToMany(type => Car, car => car.manufacturer) // specify inverse side as a second parameter
+  car: Car;
   @Column()
   siret: number;
 }

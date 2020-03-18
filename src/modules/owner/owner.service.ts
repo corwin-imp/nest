@@ -2,70 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Owner } from './owner.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThan } from 'typeorm';
 
 @Injectable()
 export class OwnerService extends TypeOrmCrudService<Owner>{
-  constructor(@InjectRepository(Owner) ownersRepository: Repository<Owner>){
-    super(ownersRepository);
+  constructor(@InjectRepository(Owner) repo){
+    super(repo);
   }
-  async applyDiscount() {
-
-  }
-}
-
-/*
-import * as crypto from 'crypto';
-import { Injectable, NotAcceptableException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-
-import { Owner, OwnerFillableFields } from './owner.entity';
-
-@Injectable()
-export class OwnersService {
-
-  constructor(
-    @InjectRepository(Owner)
-    private readonly ownerRepository: Repository<Owner>,
-  ) { }
-  async removeOwners(){
-
-  }
-  async get(id: number) {
-    return this.ownerRepository.findOne(id);
-  }
-
-  async getByEmail(email: string) {
-    return await this.ownerRepository.createQueryBuilder('owners')
-      .where('users.email = :email')
-      .setParameter('email', email)
-      .getOne();
-  }
-
-  async getByEmailAndPass(email: string, password: string) {
-    const passHash = crypto.createHmac('sha256', password).digest('hex');
-    return await this.ownerRepository.createQueryBuilder('users')
-      .where('users.email = :email and users.password = :password')
-      .setParameter('email', email)
-      .setParameter('password', passHash)
-      .getOne();
-  }
-
-  async create(
-    payload: OwnerFillableFields,
-  ) {
-    const user = await this.getByEmail(payload);
-
-    if (user) {
-      throw new NotAcceptableException(
-        'User with provided email already created.',
-      );
-    }
-
-    return await this.ownerRepository.save(
-      this.ownerRepository.create(payload),
-    );
+  async removeOldOwners() {
+    const d = new Date();
+    d.setMonth(d.getMonth() - 18);
+    return this.repo.delete({ purchaseDate: LessThan(d.toISOString())});
   }
 }
-*/

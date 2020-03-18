@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn ,OneToOne,OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn , ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Manufacturer } from '../manufacturer';
 import { Owner } from '../owner';
 
@@ -12,11 +12,16 @@ export class Car {
   @Column()
   price: number;
 
-  @Column({ length: 255 })
-  firstRegistrationDate: string;
+  @Column()
+  firstRegistrationDate: Date;
 
-  @OneToMany(type => Owner, owner => owner.id)
+  @Column()
+  withDiscount: boolean;
+
+  @OneToMany(type => Owner, owner => owner.car)
   owners: Owner[];
-  @OneToOne(type => Manufacturer)
+
+  @ManyToOne(type => Manufacturer, manufacturer => manufacturer.id)
+  @JoinColumn()
   manufacturer: Manufacturer;
 }

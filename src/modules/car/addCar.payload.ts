@@ -1,5 +1,4 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 export class AddCarPayload {
   @ApiModelProperty({
@@ -9,5 +8,4 @@ export class AddCarPayload {
   ownerId: number;
   firstRegistrationDate: string;
   price: number;
-  password: string;
 }

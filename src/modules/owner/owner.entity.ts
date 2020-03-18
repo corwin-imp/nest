@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Car } from '../car';
 @Entity({
   name: 'owners',
 })
@@ -10,6 +10,12 @@ export class Owner {
   @Column({ length: 255 })
   name: string;
 
-  @Column({ length: 255 })
-  purchaseDate: string;
+  @Column()
+  purchaseDate: Date;
+
+  @Column()
+  carId: number;
+
+  @ManyToOne(type => Car, car => car.owners)
+  car: Car;
 }

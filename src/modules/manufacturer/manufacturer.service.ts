@@ -6,10 +6,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ManufacturersService extends TypeOrmCrudService<Manufacturer>{
-  constructor(@InjectRepository(Manufacturer) manufacturerRepository: Repository<Manufacturer>){
-    super(manufacturerRepository);
-  }
-  async applyDiscount() {
-
+  constructor(@InjectRepository(Manufacturer)  manufacturesRepository: Repository<Manufacturer>){
+    super(manufacturesRepository);
   }
 }
